@@ -208,6 +208,8 @@ public class admProcesamiento {
 				if (cont >= 0) {
 					if (listarProcesoEntrada(procesos,columna)) {
 						cont--;
+						// Se promueve Proceso: No
+						
 					}
 				}
 				// Se pasa proceso Bloqueado a: Listo
@@ -258,6 +260,8 @@ public class admProcesamiento {
 				if (cont >= 0) {
 					if (listarProcesoEntrada(procesos,columna)) {
 						cont--;
+						// Se promueve Proceso: No
+						
 					}
 				}
 				// Se pasa proceso Bloqueado a: Listo
@@ -308,6 +312,8 @@ public class admProcesamiento {
 				if (cont >= 0) {
 					if (listarProcesoEntrada(procesos,columna)) {
 						cont--;
+						// Se promueve Proceso: No
+						
 					}
 				}
 				// Se pasa proceso Bloqueado a: Listo
@@ -358,6 +364,8 @@ public class admProcesamiento {
 				if (cont >= 0) {
 					if (listarProcesoEntrada(procesos,columna)) {
 						cont--;
+						// Se promueve Proceso: No
+						
 					}
 				}
 				// Se pasa proceso Bloqueado a: Listo
@@ -408,6 +416,8 @@ public class admProcesamiento {
 				if (cont >= 0) {
 					if (listarProcesoEntrada(procesos,columna)) {
 						cont--;
+						// Se promueve Proceso: No
+						
 					}
 				}
 				// Se pasa proceso Bloqueado a: Listo
@@ -430,10 +440,6 @@ public class admProcesamiento {
 			}// Fin del tiempo de la tabla 
 		}
 		return auxTabla;
-	}
-	
-	public int traerTiempoQuantum(){
-		return getHilo().getProceso().getDuracion().getiCPU();
 	}
 	
 	public String mostrarAlgoritmoSRT() {
@@ -462,6 +468,8 @@ public class admProcesamiento {
 				if (cont >= 0) {
 					if (listarProcesoEntrada(procesos,columna)) {
 						cont--;
+						// Se promueve Proceso: No
+						
 					}
 				}
 				// Se pasa proceso Bloqueado a: Listo
@@ -506,12 +514,14 @@ public class admProcesamiento {
 		if (!procesos.isEmpty()) {
 			// Por toda la tabla agrego los estados 
 			for (int columna = 0; columna < getCantidaColumnas(); columna++) {
-				// Se Realiza Turnos Rotativos: Si
-				//if(cuanto==0)if(turnarProcesoLIFO())cuanto=1;
+				// Se Realiza Turnos Rotativos: No
+				
 				// Se pasa proceso a: Listo
 				if (cont >= 0) {
 					if (listarProcesoEntrada(procesos,columna)) {
 						cont--;
+						// Se promueve Proceso: No
+						
 					}
 				}
 				// Se pasa proceso Bloqueado a: Listo
@@ -530,7 +540,7 @@ public class admProcesamiento {
 				// Se resta Quantum: No
 				
 				// Se suma Tiempo de Espera: Si
-				tasaRespuesta();
+				getListo().tasaRespuesta();
 				// Se realiza E/S: Paralelo
 				ejecutarEyS(auxTabla,columna);
 			}// Fin del tiempo de la tabla 
@@ -540,13 +550,57 @@ public class admProcesamiento {
 	
 	public String mostrarAlgoritmoFeedback(){
 		String string = "";
-		string += "Algoritmo Feedback (Primero el de mayor tasa de respuesta)";
-		string += "\n" + toString(planificarHRRN(clone(getLstProcesos()), newTable()));
+		string += "Algoritmo Feedback (Apropiativos)";
+		string += "\n" + toString(planificarFeedback(clone(getLstProcesos()), newTable()));
 		string += "\n" + mostrarLstProceso();
 		string += "\n-> hay 1 procesador";
 		string += "\n-> E/S Se realiza en paralelo\n";
 		return string;
 	}
+	
+	public Tabla[][] planificarFeedback(List<Proceso> procesos, Tabla[][] auxTabla) {
+		// Preparo el hilo 
+		getHilo().setEjecutando(false);
+		// Contadores
+		int cont = procesos.size();
+		int cuanto = 1;
+		// Si existen Procesos cargado entonces resuelvo algoritmo 
+		if (!procesos.isEmpty()) {
+			// Por toda la tabla agrego los estados 
+			for (int columna = 0; columna < getCantidaColumnas(); columna++) {
+				// Se Realiza Turnos Rotativos: Si
+				if(cuanto==0)if(turnarProcesoFIFO()){cuanto=1;getListo().expulsionFIFO();}
+				// Se pasa proceso a: Listo
+				if (cont >= 0) {
+					if (listarProcesoEntrada(procesos,columna)) {
+						cont--;
+						// Se promueve Proceso: Si
+						getListo().promoverProcesoFIFO();
+					}
+				}
+				// Se pasa proceso Bloqueado a: Listo
+				listarProcesoBloqueado();
+				// Se Ordena: Si
+				getListo().ordenarPrioridad(); /***Ordeno por Prioridad***/
+				// Se saca un proceso de Listo a: Ejecutando
+				if (prosesarProceso())cuanto=tiempoInstancia();
+				// Se Revisa CPU y Ejecuto Proceso
+				if (ejecutar(auxTabla,columna)) {
+					if (prosesarProceso())cuanto=tiempoInstancia();// Caso de que se bloquea o termina Proceso anterior. Se saca un proceso de Listo a: Ejecutando
+					ejecutar(auxTabla,columna);
+					// Se reinicia quantum: No
+					
+				}
+				// Se resta Quantum: Si
+				cuanto--;
+				// Se realiza E/S: Paralelo
+				ejecutarEyS(auxTabla,columna);
+			}// Fin del tiempo de la tabla 
+		}
+		return auxTabla;
+	}
+	
+	
 	// Módulos para los planificadores ->
 	/*------------------------------------------------------*/
 	public boolean listarProcesoEntrada(List<Proceso> procesos,int columna){
@@ -695,33 +749,28 @@ public class admProcesamiento {
 		}
 		return end;
 	}
-	
-	public boolean tasaRespuesta(){
-		int prioridad=0;
-		if (!getListo().getLstProcesos().isEmpty()) {
-			for (Proceso proceso :  getListo().getLstProcesos()) {
-				proceso.getDuracion().setTiempoEspera();
-				prioridad=tasaRespuesta(proceso);
-				if (prioridad>=1 && prioridad<=3 ) {
-					proceso.setPrioridad(Prioridad.Baja);
-				}
-				if (prioridad>=4 && prioridad<=6) {
-					proceso.setPrioridad(Prioridad.Media);
-				}
-				if (prioridad>=7) {
-					proceso.setPrioridad(Prioridad.Alta);
-				}
-			}
-			return true;
-		}
-		return false;
-	}
 
-	public int tasaRespuesta(Proceso proceso){
-		int prioridad=0;
-		prioridad=(	proceso.getDuracion().getTiempoEspera()+proceso.getDuracion().getTiempoTotal() )
-					/proceso.getDuracion().getTiempoTotal();
-		return prioridad;
+	public int tiempoInstancia(){
+		boolean end=false;
+		int tiempo=1;
+		Proceso p=getHilo().getProceso();
+		if (!end && p.getPrioridad().equals(Prioridad.Baja)) {
+			end=true;
+			tiempo=calcularPotencia(2);
+		}
+		if (!end && p.getPrioridad().equals(Prioridad.Media)) {
+			end=true;
+			tiempo=calcularPotencia(1);
+		}
+		if (!end && p.getPrioridad().equals(Prioridad.Alta) ) {
+			end=true;
+			tiempo=calcularPotencia(0);
+		}
+		return tiempo;
+	}
+	
+	public int calcularPotencia(int exponente){
+		return (int) Math.pow(2, exponente);
 	}
 	
 	// @Override ->

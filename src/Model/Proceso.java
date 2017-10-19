@@ -68,6 +68,23 @@ public class Proceso implements Cloneable {
 		Baja, Media, Alta
 	};
 
+	/*------------------------------------------------------*/
+	// Métodos ->
+	public void tiempoEspera() {
+		getDuracion().setTiempoEspera();
+	}
+	
+	public int tasaRespuesta(){
+		int prioridad=0;
+		prioridad=(	getDuracion().getTiempoEspera()+getDuracion().getTiempoTotal() )
+					/getDuracion().getTiempoTotal();
+		return prioridad;
+	}
+	
+	
+	/*------------------------------------------------------*/
+	// @Override ->
+	
 	@Override
 	public String toString() {
 		return "Proceso=" + getProceso() + ", Tiempo Comienza=" + getComienzaTiempo() + ", Duración=" + getDuracion()

@@ -163,6 +163,54 @@ public class Listo {
 		return true;
 	}
 	
+	public boolean tasaRespuesta(){
+		int prioridad=0;
+		if (!getLstProcesos().isEmpty()) {
+			for (Proceso proceso :  getLstProcesos()) {
+				proceso.tiempoEspera();
+				prioridad=proceso.tasaRespuesta();
+				if (prioridad>=0 && prioridad<=3 ) {
+					proceso.setPrioridad(Prioridad.Baja);
+				}
+				if (prioridad>=4 && prioridad<=6) {
+					proceso.setPrioridad(Prioridad.Media);
+				}
+				if (prioridad>=7) {
+					proceso.setPrioridad(Prioridad.Alta);
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean expulsionFIFO(){
+		boolean end=false;
+		Proceso p=getLstProcesos().get(getLstProcesos().size()-1);
+		if (!end && p.getPrioridad().equals(Prioridad.Alta)) {
+			p.setPrioridad(Prioridad.Media);
+			end=true;
+		}
+		if (!end && p.getPrioridad().equals(Prioridad.Media)) {
+			p.setPrioridad(Prioridad.Baja);
+			end=true;
+		}
+		// un proceso no puede desender más
+		return end;
+	}
+	
+	public boolean promoverProcesoFIFO(){
+		boolean promoted=false;
+		if (!getLstProcesos().isEmpty()) {
+			Proceso p=getLstProcesos().get(getLstProcesos().size()-1);
+			p.setPrioridad(Prioridad.Alta);
+			promoted=true;
+		}
+		return promoted;
+	}
+	//public boolean 
+	/*------------------------------------------------------*/
+	// @Override ->
 	@Override
 	public String toString() {
 		String string = "IdListo=" + getIdListo();

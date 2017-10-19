@@ -68,7 +68,9 @@ public class Duracion {
 		this.tiempoEspera = tiempoEspera;
 	}
 	
-	// Métodos
+	/*------------------------------------------------------*/
+	// Métodos ->
+	
 	public void setTiempoEspera() {
 		this.tiempoEspera = tiempoEspera+1;
 	}

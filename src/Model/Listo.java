@@ -94,88 +94,92 @@ public class Listo {
 				if (lstProcesosAux.isEmpty()) {
 					lstProcesosAux.add(getLstProcesos().get(i));
 				} else {
-					lstProcesosAux.add(contAlta+contMedia, getLstProcesos().get(i));
+					lstProcesosAux.add(contAlta + contMedia, getLstProcesos().get(i));
 				}
 				contMedia++;
 			}
 			if (getLstProcesos().get(i).getPrioridad().equals(Prioridad.Baja)) {
-				lstProcesosAux.add(getLstProcesos().get(i));	
+				lstProcesosAux.add(getLstProcesos().get(i));
 			}
 			// Siguiente
 			i++;
-		}// Termino y guardo lista ordenada por prioridad 
+		} // Termino y guardo lista ordenada por prioridad
 		getLstProcesos().removeAll(lstProcesos);
 		setLstProcesos(lstProcesosAux);
 		return orden;
 	}
 
 	public boolean ordenarTiempoTotal() {
-		boolean ordenado=false;
+		boolean ordenado = false;
 		// Ordeno lista por InsertionSort
-		ordenado=InsertionSort();
+		ordenado = InsertionSort();
 		return ordenado;
 	}
-	
+
 	public boolean ordenarTiempoRestante() {
-		boolean ordenado=false;
+		boolean ordenado = false;
 		// Se calcula tiempo restante
 		int lenD = getLstProcesos().size();
 		Proceso procesoAux = new Proceso();
-		int j=0;
-		int iCPU=0;
-		int fCPU=0;
-		while (j<lenD) {
-			iCPU=0;
-			fCPU=0;
-			procesoAux=getLstProcesos().get(j);
-			if (procesoAux.getDuracion().getiCPU()>0) {
-				iCPU=procesoAux.getDuracion().getiCPU();
+		int j = 0;
+		int iCPU = 0;
+		int fCPU = 0;
+		while (j < lenD) {
+			iCPU = 0;
+			fCPU = 0;
+			procesoAux = getLstProcesos().get(j);
+			if (procesoAux.getDuracion().getiCPU() > 0) {
+				iCPU = procesoAux.getDuracion().getiCPU();
 			}
-			if (procesoAux.getDuracion().getfCPU()>0) {
-				fCPU=procesoAux.getDuracion().getfCPU();
+			if (procesoAux.getDuracion().getfCPU() > 0) {
+				fCPU = procesoAux.getDuracion().getfCPU();
 			}
-			procesoAux.getDuracion().setTiempoTotal(iCPU+fCPU);
+			procesoAux.getDuracion().setTiempoTotal(iCPU + fCPU);
 			j++;
 		}
 		// Se Ordena lista con: InsertionSort
-		ordenado=InsertionSort();
+		ordenado = InsertionSort();
 		return ordenado;
 	}
-	
-	private boolean InsertionSort(){
+
+	private boolean InsertionSort() {
 		int lenD = getLstProcesos().size();
-		Proceso procesoAux = new Proceso();int k;
-		boolean ordenado=false;
-		for(int i=1;i<lenD;i++){
-			procesoAux=getLstProcesos().get(i);
-			k=i-1;
-			ordenado=false;
-			while(!ordenado && k>=0){
-				if(procesoAux.getDuracion().getTiempoTotal()<getLstProcesos().get(k).getDuracion().getTiempoTotal()){	
-					getLstProcesos().set(k+1, getLstProcesos().get(k));
-					k=k-1;
-				}else{
-					ordenado=true;
+		Proceso procesoAux = new Proceso();
+		int k;
+		boolean ordenado = false;
+		for (int i = 1; i < lenD; i++) {
+			procesoAux = getLstProcesos().get(i);
+			k = i - 1;
+			ordenado = false;
+			while (!ordenado && k >= 0) {
+				if (procesoAux.getDuracion().getTiempoTotal() < getLstProcesos().get(k).getDuracion()
+						.getTiempoTotal()) {
+					getLstProcesos().set(k + 1, getLstProcesos().get(k));
+					k = k - 1;
+				} else {
+					ordenado = true;
 				}
 			}
-			getLstProcesos().set(k+1, procesoAux);
+			getLstProcesos().set(k + 1, procesoAux);
 		}
 		return true;
 	}
-	
-	public boolean tasaRespuesta(){
-		int prioridad=0;
+
+	public boolean tasaRespuesta() {
+		int prioridad = 0;
 		if (!getLstProcesos().isEmpty()) {
-			for (Proceso proceso :  getLstProcesos()) {
+			for (Proceso proceso : getLstProcesos()) {
 				proceso.tiempoEspera();
-				prioridad=proceso.tasaRespuesta();
-				if (prioridad>=0 && prioridad<=3 ) {
+				// se suma +1 a tiempo de espera
+				prioridad = proceso.tasaRespuesta();
+				// se cambia prioridad segun:
+				if (prioridad >= 0 && prioridad <= 3) {
 					proceso.setPrioridad(Prioridad.Baja);
 				}
-				if (prioridad>=4 && prioridad<=6) {
+				if (prioridad >= 4 && prioridad <= 6) {
 					proceso.setPrioridad(Prioridad.Media);
 				}
-				if (prioridad>=7) {
+				if (prioridad >= 7) {
 					proceso.setPrioridad(Prioridad.Alta);
 				}
 			}
@@ -183,32 +187,32 @@ public class Listo {
 		}
 		return false;
 	}
-	
-	public boolean expulsionFIFO(){
-		boolean end=false;
-		Proceso p=getLstProcesos().get(getLstProcesos().size()-1);
-		if (!end && p.getPrioridad().equals(Prioridad.Alta)) {
+
+	public boolean expulsionFIFO() {
+		boolean desender = false;
+		Proceso p = getLstProcesos().get(getLstProcesos().size() - 1);
+		if (!desender && p.getPrioridad().equals(Prioridad.Alta)) {
 			p.setPrioridad(Prioridad.Media);
-			end=true;
+			desender = true;
 		}
-		if (!end && p.getPrioridad().equals(Prioridad.Media)) {
+		if (!desender && p.getPrioridad().equals(Prioridad.Media)) {
 			p.setPrioridad(Prioridad.Baja);
-			end=true;
+			desender = true;
 		}
-		// un proceso no puede desender más
-		return end;
+		// si es false es que un proceso no puede desender más
+		return desender;
 	}
-	
-	public boolean promoverProcesoFIFO(){
-		boolean promoted=false;
+
+	public boolean promoverProcesoFIFO() {
+		boolean promoted = false;
 		if (!getLstProcesos().isEmpty()) {
-			Proceso p=getLstProcesos().get(getLstProcesos().size()-1);
+			Proceso p = getLstProcesos().get(getLstProcesos().size() - 1);
 			p.setPrioridad(Prioridad.Alta);
-			promoted=true;
+			promoted = true;
 		}
 		return promoted;
 	}
-	//public boolean 
+
 	/*------------------------------------------------------*/
 	// @Override ->
 	@Override

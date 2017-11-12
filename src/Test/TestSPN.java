@@ -37,6 +37,15 @@ public class TestSPN {
 		admP3.agregarProceso("P4", 2, 3, 1, 2, Prioridad.Media);
 		admP3.agregarProceso("P5", 3, 3, 2, 4, Prioridad.Alta);
 		System.out.println(admP3.mostrarAlgoritmoSPN());
+		
+		admProcesamiento admP4 = new admProcesamiento(10, 50);
+		System.out.println("-----------Creando-----------");
+		admP4.agregarProceso("P1", 1, 3, 2, 4, Prioridad.Media);
+		admP4.agregarProceso("P2", 2, 2, 3, 2, Prioridad.Baja);
+		admP4.agregarProceso("P3", 3, 4, 2, 1, Prioridad.Alta);
+		admP4.agregarProceso("P4", 4, 1, 1, 1, Prioridad.Media);
+		System.out.println(admP4.mostrarAlgoritmoSPN());
+		
 
 	}
 

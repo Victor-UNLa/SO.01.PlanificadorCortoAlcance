@@ -1,7 +1,8 @@
 package Test;
 
 import Model.admProcesamiento;
-import Model.Proceso.Prioridad;
+import Model.Prioridad;
+import Model.Tabla;
 
 public class TestPrioridad {
 
@@ -14,7 +15,7 @@ public class TestPrioridad {
 		admP1.agregarProceso("P3", 3, 2, 5, 1, Prioridad.Media);
 		admP1.agregarProceso("P4", 3, 1, 4, 5, Prioridad.Media);
 		admP1.agregarProceso("P5", 5, 3, 2, 3, Prioridad.Alta);
-		System.out.println(admP1.mostrarAlgoritmoPrioridad());
+		System.out.println(mostrarAlgoritmoPrioridad(admP1));
 		
 		
 		admProcesamiento admP2 = new admProcesamiento(10, 40);
@@ -24,7 +25,7 @@ public class TestPrioridad {
 		admP2.agregarProceso("P3", 2, 1, 2, 1, Prioridad.Media);
 		admP2.agregarProceso("P4", 2, 3, 2, 2, Prioridad.Media);
 		admP2.agregarProceso("P5", 3, 3, 2, 4, Prioridad.Alta);
-		System.out.println(admP2.mostrarAlgoritmoPrioridad());
+		System.out.println(mostrarAlgoritmoPrioridad(admP2));
 		
 
 		admProcesamiento admP3 = new admProcesamiento(10, 40);
@@ -34,8 +35,19 @@ public class TestPrioridad {
 		admP3.agregarProceso("P3", 2, 1, 2, 1, Prioridad.Alta);
 		admP3.agregarProceso("P4", 2, 3, 1, 2, Prioridad.Media);
 		admP3.agregarProceso("P5", 3, 3, 2, 4, Prioridad.Alta);
-		System.out.println(admP3.mostrarAlgoritmoPrioridad());
+		System.out.println(mostrarAlgoritmoPrioridad(admP3));
 	
 	}
 
+	public static String mostrarAlgoritmoPrioridad(admProcesamiento admP) {
+		String string = "";
+		Tabla[][] tabla = admP.planificarPrioridad();
+		string += "Algoritmo Prioridad";
+		string += "\n" + admP.toString(tabla);
+		string += "\n" + admP.mostrarProcesos();
+		string += "\n-> hay 1 procesador";
+		string += "\n-> E/S Se realiza en paralelo";	
+		return string;
+	}
+	
 }

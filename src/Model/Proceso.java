@@ -64,9 +64,6 @@ public class Proceso implements Cloneable {
 		this.duracion = duracion;
 	}
 
-	public enum Prioridad {
-		Baja, Media, Alta
-	};
 
 	/*------------------------------------------------------*/
 	// Métodos ->

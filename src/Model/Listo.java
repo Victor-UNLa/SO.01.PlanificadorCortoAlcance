@@ -3,8 +3,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Proceso.Prioridad;
-
 public class Listo {
 
 	private int idListo;

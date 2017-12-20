@@ -1,6 +1,6 @@
 package Test;
 
-import Model.Proceso.Prioridad;
+import Model.Prioridad;
 import Model.admProcesamiento;
 
 public class Test {
@@ -50,17 +50,17 @@ public class Test {
 		System.out.println("\t" + admP.getBuffers());// Compruebo
 
 		// test5
-		System.out.println("Test 5: " + admP.getBuffers().ejecutarEyS(1) + " Ejecutando E/S");
+		System.out.println("Test 5.1: " + admP.getBuffers().ejecutarEyS(1) + " Ejecutando E/S");
 		System.out.println("\t" + admP.getBuffers());// Compruebo
-		System.out.println("Test 5: " + admP.getBuffers().ejecutarEyS(1) + " Ejecutando E/S");
+		System.out.println("Test 5.2: " + admP.getBuffers().ejecutarEyS(1) + " Ejecutando E/S");
 		System.out.println("\t" + admP.getBuffers());// Compruebo
-		System.out.println("Test 5: " + admP.getBuffers().ejecutarEyS(1) + " Ejecutando E/S");
+		System.out.println("Test 5.3: " + admP.getBuffers().ejecutarEyS(1) + " Ejecutando E/S");
 		System.out.println("\t" + admP.getBuffers());// Compruebo
 
 		// test6
-		System.out.println("Test 6: " + admP.desbloquearProceso(1) + " Eliminado");
+		System.out.println("Test 6.1: " + admP.desbloquearProceso(1) + " Eliminado");
 		System.out.println("\t" + admP.getBuffers());// Compruebo
-		System.out.println("Test 6: " + admP.desbloquearProceso(2) + " Eliminado");
+		System.out.println("Test 6.2: " + admP.desbloquearProceso(2) + " Eliminado");
 		System.out.println("\t" + admP.getBuffers());// Compruebo
 
 		System.out.println("-----------Listo-----------");

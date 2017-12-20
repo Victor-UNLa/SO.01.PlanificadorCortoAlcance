@@ -115,6 +115,16 @@ public class Buffers {
 		return ordenado;
 	}
 	
+	// Interrucpción de E/S
+	public boolean interrupcionEyS(int index){
+		boolean endEyS=true;
+		if (getLstProcesos().get(index).getDuracion().getEyS() > 0) {
+			endEyS=false;
+		}
+		return endEyS;
+	}
+	
+	
 	@Override
 	public String toString() {
 		String string = "IdBuffers=" + getIdBuffers();

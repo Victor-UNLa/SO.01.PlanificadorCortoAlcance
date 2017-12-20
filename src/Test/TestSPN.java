@@ -1,14 +1,14 @@
 
 package Test;
 
-import Model.Proceso.Prioridad;
+import Model.Prioridad;
+import Model.Tabla;
 import Model.admProcesamiento;
 
 public class TestSPN {
 
 	public static void main(String[] args) {
-		
-		
+
 		admProcesamiento admP1 = new admProcesamiento(10, 50);
 		System.out.println("-----------Creando-----------");
 		admP1.agregarProceso("P1", 1, 4, 2, 3, Prioridad.Alta);
@@ -16,8 +16,7 @@ public class TestSPN {
 		admP1.agregarProceso("P3", 2, 5, 5, 3, Prioridad.Media);
 		admP1.agregarProceso("P4", 2, 3, 3, 3, Prioridad.Media);
 		admP1.agregarProceso("P5", 3, 7, 1, 4, Prioridad.Alta);
-		System.out.println(admP1.mostrarAlgoritmoSPN());
-
+		System.out.println(mostrarAlgoritmoSPN(admP1));
 
 		admProcesamiento admP2 = new admProcesamiento(10, 50);
 		System.out.println("-----------Creando-----------");
@@ -26,9 +25,8 @@ public class TestSPN {
 		admP2.agregarProceso("P3", 3, 2, 5, 1, Prioridad.Media);
 		admP2.agregarProceso("P4", 3, 1, 4, 5, Prioridad.Media);
 		admP2.agregarProceso("P5", 5, 3, 2, 3, Prioridad.Alta);
-		System.out.println(admP2.mostrarAlgoritmoSPN());
-		
-		
+		System.out.println(mostrarAlgoritmoSPN(admP2));
+
 		admProcesamiento admP3 = new admProcesamiento(10, 50);
 		System.out.println("-----------Creando-----------");
 		admP3.agregarProceso("P1", 1, 4, 2, 1, Prioridad.Alta);
@@ -36,17 +34,26 @@ public class TestSPN {
 		admP3.agregarProceso("P3", 2, 1, 2, 1, Prioridad.Media);
 		admP3.agregarProceso("P4", 2, 3, 1, 2, Prioridad.Media);
 		admP3.agregarProceso("P5", 3, 3, 2, 4, Prioridad.Alta);
-		System.out.println(admP3.mostrarAlgoritmoSPN());
-		
+		System.out.println(mostrarAlgoritmoSPN(admP3));
+
 		admProcesamiento admP4 = new admProcesamiento(10, 50);
 		System.out.println("-----------Creando-----------");
 		admP4.agregarProceso("P1", 1, 3, 2, 4, Prioridad.Media);
 		admP4.agregarProceso("P2", 2, 2, 3, 2, Prioridad.Baja);
 		admP4.agregarProceso("P3", 3, 4, 2, 1, Prioridad.Alta);
 		admP4.agregarProceso("P4", 4, 1, 1, 1, Prioridad.Media);
-		System.out.println(admP4.mostrarAlgoritmoSPN());
-		
+		System.out.println(mostrarAlgoritmoSPN(admP4));
 
 	}
 
+	public static String mostrarAlgoritmoSPN(admProcesamiento admP) {
+		String string = "";
+		Tabla[][] tabla = admP.planificarSPN();
+		string += "Algoritmo SPN";
+		string += "\n" + admP.toString(tabla);
+		string += "\n" + admP.mostrarProcesos();
+		string += "\n-> hay 1 procesador";
+		string += "\n-> E/S Se realiza en paralelo\n";
+		return string;
+	}
 }

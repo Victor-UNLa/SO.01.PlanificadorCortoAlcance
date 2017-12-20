@@ -11,7 +11,8 @@
 package Test;
 
 import Model.admProcesamiento;
-import Model.Proceso.Prioridad;
+import Model.Prioridad;
+import Model.Tabla;
 
 public class TestFIFO {
 
@@ -19,44 +20,27 @@ public class TestFIFO {
 
 		// *****************************************************************************
 		// -Prueba numero 1 del algoritmo FIFO
-		admProcesamiento admP = new admProcesamiento(20, 50);
+		admProcesamiento admP1 = new admProcesamiento(20, 35);
 		System.out.println("-----------Creando-----------");
-		admP.agregarProceso("P1", 1, 3, 1, 2, Prioridad.Media);
-		admP.agregarProceso("P2", 2, 3, 3, 2, Prioridad.Baja);
-		admP.agregarProceso("P3", 3, 4, 2, 5, Prioridad.Alta);
-		admP.agregarProceso("P4", 6, 1, 1, 1, Prioridad.Media);
-		admP.agregarProceso("P5", 7, 4, 5, 5, Prioridad.Alta);
-		admP.agregarProceso("P6", 8, 1, 3, 1, Prioridad.Media);
-		System.out.println(admP.mostrarAlgoritmoFIFO());
-		
-		// *****************************************************************************
-		// -Prueba numero 2 del algoritmo FIFO
-		admProcesamiento admP2 = new admProcesamiento(8, 50);
-		System.out.println("/-----------Creando 2-----------");
-		admP2.agregarProceso("P1", 1, 1, 3, 2, Prioridad.Alta);
-		admP2.agregarProceso("P2", 1, 5, 2, 4, Prioridad.Baja);
-		admP2.agregarProceso("P3", 2, 4, 1, 6, Prioridad.Alta);
-		admP2.agregarProceso("P4", 3, 5, 1, 1, Prioridad.Media);
-		admP2.agregarProceso("P5", 3, 3, 4, 1, Prioridad.Media);
-		admP2.agregarProceso("P6", 5, 1, 2, 3, Prioridad.Baja);
-		admP2.agregarProceso("P6", 6, 4, 3, 1, Prioridad.Media);
-		admP2.agregarProceso("P8", 8, 2, 5, 1, Prioridad.Baja);
-		System.out.println(admP2.mostrarAlgoritmoFIFO());
+		admP1.agregarProceso("P1", 1, 3, 1, 2, Prioridad.Media);
+		admP1.agregarProceso("P2", 2, 3, 3, 2, Prioridad.Baja);
+		admP1.agregarProceso("P3", 3, 4, 2, 5, Prioridad.Alta);
+		admP1.agregarProceso("P4", 6, 1, 1, 1, Prioridad.Media);
+		admP1.agregarProceso("P5", 7, 4, 5, 5, Prioridad.Alta);
+		admP1.agregarProceso("P6", 8, 1, 3, 1, Prioridad.Media);
+		System.out.println(mostrarAlgoritmoFIFO(admP1));
 
-		// *****************************************************************************
-		// -Prueba numero 3 del algoritmo FIFO
-		admProcesamiento admP3 = new admProcesamiento(8, 48);
-		System.out.println("/-----------Creando 3-----------");
-		admP3.agregarProceso("P1", 1, 4, 2, 3, Prioridad.Alta);
-		admP3.agregarProceso("P2", 1, 3, 4, 3, Prioridad.Baja);
-		admP3.agregarProceso("P3", 2, 2, 2, 6, Prioridad.Alta);
-		admP3.agregarProceso("P4", 3, 1, 3, 2, Prioridad.Media);
-		admP3.agregarProceso("P5", 4, 1, 1, 5, Prioridad.Media);
-		admP3.agregarProceso("P6", 5, 4, 1, 3, Prioridad.Baja);
-		admP3.agregarProceso("P6", 5, 5, 2, 1, Prioridad.Media);
-		admP3.agregarProceso("P8", 7, 1, 3, 1, Prioridad.Baja);
-		System.out.println(admP3.mostrarAlgoritmoFIFO());
+	}
 
+	public static String mostrarAlgoritmoFIFO(admProcesamiento admP) {
+		String string = "";
+		Tabla[][] tabla = admP.planificarFIFO();
+		string += "Algoritmo FIFO";
+		string += "\n" + admP.toString(tabla);
+		string += "\n" + admP.mostrarProcesos();
+		string += "\n-> hay 1 procesador";
+		string += "\n-> E/S Se realiza en paralelo\n";
+		return string;
 	}
 
 }

@@ -77,7 +77,9 @@ public class Proceso implements Cloneable {
 					/getDuracion().getTiempoTotal();
 		return prioridad;
 	}
-	
+	public int tiempoTotal() {
+		return getDuracion().getiCPU()+getDuracion().getfCPU()+getDuracion().getEyS();
+	}
 	
 	/*------------------------------------------------------*/
 	// @Override ->

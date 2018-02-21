@@ -4,23 +4,23 @@ import java.util.List;
 
 public class admTablaProcesos {
 
+	/*------------------------------------------------------*/
+	// Atributos
+	/*------------------------------------------------------*/
 	private List<Proceso> lstProcesos;
-	private int cantidadFilas;
 	private int cantidaColumnas;
 
+	/*------------------------------------------------------*/
+	// Constructor
+	/*------------------------------------------------------*/
 	public admTablaProcesos(admProcesamiento admP) {
 		this.lstProcesos = admP.getLstProcesos();
-		this.cantidadFilas = admP.getCantidadFilas();
 		this.cantidaColumnas = admP.getCantidaColumnas();
 	}
 
-	public int getCantidadFilas() {
-		return cantidadFilas;
-	}
-
-	public void setCantidadFilas(int cantidadFilas) {
-		this.cantidadFilas = cantidadFilas;
-	}
+	/*------------------------------------------------------*/
+	// Métodos Getter y Setter
+	/*------------------------------------------------------*/
 
 	public int getCantidaColumnas() {
 		return cantidaColumnas;
@@ -38,18 +38,19 @@ public class admTablaProcesos {
 		this.lstProcesos = lstProcesos;
 	}
 
-	// Métodos
+	/*------------------------------------------------------*/
+	// Metodos
+	/*------------------------------------------------------*/
 	public Proceso traerProceso(int idProceso) {
 		return lstProcesos.get(idProceso - 1);
 	}
 
 	public String mostrarResultados(Tabla[][] tabla) {
-		String string = "";
-		string += "\n" + toString(tabla);
-		return string;
+		return toString(tabla);
 	}
 
-	// Formulas
+	// Módulos de Formulas ->
+	/*------------------------------------------------------*/
 	public int tiempoLLegada(int idProceso) {
 		return traerProceso(idProceso).getComienzaTiempo();
 	}
@@ -80,9 +81,8 @@ public class admTablaProcesos {
 		return (float) tiempoRespuesta(idProceso, tabla) / tiempototal(idProceso);
 	}
 
-	public float promedio() {
-
-		return 0;
+	public float promedio(float cantidad) {
+		return cantidad/getLstProcesos().size();
 	}
 
 	// @Override ->
@@ -95,7 +95,6 @@ public class admTablaProcesos {
 
 		String texto[] = { "Proceso", "Tiempo llegada", "Tiempo Total", "Tiempo Finalización", "Tiempo de Repuesta(T)",
 				"Tiempo Desperdiciado(W)", "Tiempo de Penalización(P)  " };
-		string += "Resultados->\n";
 		for (int i = 0; i <= 72; i++) {
 			string += "--";
 		}
@@ -124,8 +123,8 @@ public class admTablaProcesos {
 			string += "--";
 		}
 		string += "\n";
-		string += "|\tPromedio: \t\t\t\t\t\t" + "T=" + T / lstProcesos.size() + "  \t\t" + "W=" + W / lstProcesos.size()
-				+ "  \t\t  " + "P=" + P / lstProcesos.size() + "\t";
+		string += "|\tPromedio: \t\t\t\t\t\t" + "T=" + promedio(T) + "  \t\t" + "W=" + promedio(W)
+				+ "  \t\t  " + "P=" + promedio(P) + "\t";
 
 		string += "\n";
 		for (int i = 0; i <= 72; i++) {

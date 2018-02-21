@@ -752,7 +752,7 @@ public class admProcesamiento {
 		return string;
 	}
 
-	public String toString(Tabla[][] auxTabla) {
+	public String mostrarPlanificador(Tabla[][] auxTabla) {
 		String string;
 		string = "--------";
 		for (int i = 0; i <= getCantidaColumnas(); i++) {

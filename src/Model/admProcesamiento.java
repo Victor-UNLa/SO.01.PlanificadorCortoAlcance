@@ -8,9 +8,6 @@ import Model.Tabla;
 
 public class admProcesamiento {
 
-	/*------------------------------------------------------*/
-	// Atributos
-	/*------------------------------------------------------*/
 	private List<Proceso> lstProcesos;
 	private int cantidadFilas;
 	private int cantidaColumnas;
@@ -19,9 +16,6 @@ public class admProcesamiento {
 	private Buffers buffers;
 	private Listo listo;
 
-	/*------------------------------------------------------*/
-	// Constructor
-	/*------------------------------------------------------*/
 	public admProcesamiento(int cantidadFilas, int cantidaColumnas) {
 		this.lstProcesos = new ArrayList<Proceso>();
 		this.cantidadFilas = cantidadFilas;
@@ -33,9 +27,6 @@ public class admProcesamiento {
 		this.listo = new Listo(1);
 	}
 
-	/*------------------------------------------------------*/
-	// Métodos Getter y Setter
-	/*------------------------------------------------------*/
 	public List<Proceso> getLstProcesos() {
 		return lstProcesos;
 	}

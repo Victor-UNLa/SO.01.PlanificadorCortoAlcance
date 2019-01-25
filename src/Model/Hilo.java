@@ -36,11 +36,9 @@ public class Hilo {
 		this.proceso = proceso;
 	}
 
-	/*------------------------------------------------------*/
-	// Métodos
 	public boolean ejecutarProceso(Proceso proceso) {
 		boolean validate = false;
-		if (!isEjecutando()) { // mejorado
+		if (!isEjecutando()) {
 			setProceso(proceso);
 			setEjecutando(true);
 			validate = true;

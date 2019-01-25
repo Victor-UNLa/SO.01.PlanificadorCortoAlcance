@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Listo {
@@ -29,8 +30,6 @@ public class Listo {
 		this.lstProcesos = lstProcesos;
 	}
 
-	/*------------------------------------------------------*/
-	// Metodos
 	public Proceso traerProceso(int idProceso) {
 		Proceso procesoAux = null;
 		int i = 0;
@@ -56,12 +55,12 @@ public class Listo {
 
 	public Proceso deslistarProceso(int idProceso) {
 		Proceso procesoAux = null;
-		if (!traerProceso(idProceso).equal(null)) {
+		if (!traerProceso(idProceso).equals(null)) {
 			procesoAux = traerProceso(idProceso);
 			int i = 0;
 			int lenD = getLstProcesos().size();
 			while (i < lenD) {
-				if (traerProceso(i + 1).equals(idProceso)) {
+				if (traerProceso(i + 1).equal(idProceso)) {
 					getLstProcesos().remove(i);
 					i = lenD;
 				}
@@ -108,14 +107,12 @@ public class Listo {
 	}
 
 	public boolean ordenarTiempoTotal() {
-		boolean ordenado = false;
-		// Ordeno lista por InsertionSort
-		ordenado = InsertionSort();
-		return ordenado;
+		// ENE-2019¡¡¡
+		Collections.sort(getLstProcesos());
+		return true;
 	}
 
 	public boolean ordenarTiempoRestante() {
-		boolean ordenado = false;
 		// Se calcula tiempo restante
 		int lenD = getLstProcesos().size();
 		Proceso procesoAux = new Proceso();
@@ -135,31 +132,8 @@ public class Listo {
 			procesoAux.getDuracion().setTiempoTotal(iCPU + fCPU);
 			j++;
 		}
-		// Se Ordena lista con: InsertionSort
-		ordenado = InsertionSort();
-		return ordenado;
-	}
-
-	private boolean InsertionSort() {
-		int lenD = getLstProcesos().size();
-		Proceso procesoAux = new Proceso();
-		int k;
-		boolean ordenado = false;
-		for (int i = 1; i < lenD; i++) {
-			procesoAux = getLstProcesos().get(i);
-			k = i - 1;
-			ordenado = false;
-			while (!ordenado && k >= 0) {
-				if (procesoAux.getDuracion().getTiempoTotal() < getLstProcesos().get(k).getDuracion()
-						.getTiempoTotal()) {
-					getLstProcesos().set(k + 1, getLstProcesos().get(k));
-					k = k - 1;
-				} else {
-					ordenado = true;
-				}
-			}
-			getLstProcesos().set(k + 1, procesoAux);
-		}
+		// ENE-2019¡¡¡
+		Collections.sort(getLstProcesos());
 		return true;
 	}
 
@@ -211,8 +185,6 @@ public class Listo {
 		return promoted;
 	}
 
-	/*------------------------------------------------------*/
-	// @Override ->
 	@Override
 	public String toString() {
 		String string = "IdListo=" + getIdListo();

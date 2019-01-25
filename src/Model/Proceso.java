@@ -1,6 +1,6 @@
 package Model;
 
-public class Proceso implements Cloneable {
+public class Proceso implements Cloneable, Comparable<Proceso>{
 
 	private int idProceso;
 	private String proceso;
@@ -63,10 +63,7 @@ public class Proceso implements Cloneable {
 	public void setDuracion(Duracion duracion) {
 		this.duracion = duracion;
 	}
-
-
-	/*------------------------------------------------------*/
-	// Métodos ->
+	
 	public void tiempoEspera() {
 		getDuracion().setTiempoEspera();
 	}
@@ -80,9 +77,6 @@ public class Proceso implements Cloneable {
 	public int tiempoTotal() {
 		return getDuracion().getiCPU()+getDuracion().getfCPU()+getDuracion().getEyS();
 	}
-	
-	/*------------------------------------------------------*/
-	// @Override ->
 	
 	@Override
 	public String toString() {
@@ -98,7 +92,7 @@ public class Proceso implements Cloneable {
 		return validate;
 	}
 
-	public boolean equal(Proceso proceso) { // Nuevo¡¡¡ 2017
+	public boolean equal(Proceso proceso) { // NOV-2017¡¡¡
 		boolean validate = false;
 		if (this.hashCode() == proceso.hashCode()) {
 			validate = true;
@@ -106,8 +100,7 @@ public class Proceso implements Cloneable {
 		return validate;
 	}
 
-	@Override
-	public int hashCode() { // Nuevo¡¡¡ 2017
+	public int hashCode() { // NOV-2017¡¡¡
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + comienzaTiempo;
@@ -118,10 +111,27 @@ public class Proceso implements Cloneable {
 		return result;
 	}
 
-	@Override
-	public Proceso clone() { // Nuevo¡¡¡ 2017
-		return new Proceso(getIdProceso(), getProceso(), getComienzaTiempo(), getPrioridad(),
-			   new Duracion(getDuracion().getiCPU(), getDuracion().getEyS(), getDuracion().getfCPU()));
+	public Proceso clone() { // ENE-2019¡¡¡
+		Proceso obj = null;
+		try {
+			obj = (Proceso)super.clone();
+		} catch (Exception e) {
+			System.out.println(" no se puede duplicar objeto");
+		}
+		obj.duracion = (Duracion)obj.duracion.clone();
+		return obj;
+	}
+	
+	public int compareTo(Proceso producto) { // ENE-2019¡¡¡
+		int resultado = 0;
+		if (this.getDuracion().getTiempoTotal()  < producto.getDuracion().getTiempoTotal()) {
+			resultado = -1;
+		} else if (this.getDuracion().getTiempoTotal() > producto.getDuracion().getTiempoTotal()) {
+			resultado = 1;
+		} else {
+			resultado = 0;
+		}
+		return resultado;
 	}
 
 }

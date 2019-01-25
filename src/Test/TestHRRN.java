@@ -1,3 +1,13 @@
+/*------------------------- Algoritmo HRRN ------------------------*/
+//  Planificador de corto alcance (PCA)
+//
+// Es el principal planificador del Sistema Operativo, está continuamente 
+// funcionando, es quien decide que proceso pasa a ejecutado, usa distintas 
+// políticas o algoritmos, brinda cierta equidad.
+// v1.2
+// Autor: José Victor Ibáñez
+/*------------------------- ------------- -------------------------*/
+
 package Test;
 
 import Model.admProcesamiento;
@@ -17,11 +27,12 @@ public class TestHRRN {
 		admP1.agregarProceso("P5", 7, 4, 5, 5, Prioridad.Alta);
 		admP1.agregarProceso("P6", 8, 1, 3, 1, Prioridad.Media);
 
-		admTablaProcesos admTP = new admTablaProcesos(admP1);
 		System.out.println("----------- Planificador HRRN -----------");
 		System.out.println(admP1.mostrarPlanificador(admP1.planificarHRRN()));
 		System.out.println(admP1.mostrarProcesos() + "\n-> hay 1 procesador" + "\n-> E/S Se realiza en paralelo\n");
+
 		System.out.println("----------- Resultados HRRN -----------");
+		admTablaProcesos admTP = new admTablaProcesos(admP1);
 		System.out.println(admTP.mostrarResultados(admP1.planificarHRRN()));
 
 	}

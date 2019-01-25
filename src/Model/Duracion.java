@@ -1,6 +1,6 @@
 package Model;
 
-public class Duracion {
+public class Duracion implements Cloneable {
 
 	private int iCPU;
 	private int EyS;
@@ -64,9 +64,6 @@ public class Duracion {
 		this.tiempoEspera = tiempoEspera;
 	}
 
-	/*------------------------------------------------------*/
-	// Métodos ->
-
 	public void setTiempoEspera() {
 		this.tiempoEspera = tiempoEspera + 1;
 	}
@@ -76,4 +73,15 @@ public class Duracion {
 		return "[CPU=" + getiCPU() + ", E/S=" + getEyS() + ", CPU=" + getfCPU() + "]";
 	}
 
+	public Object clone() { // ENE-2019¡¡¡
+		Duracion obj = null;
+		try {
+			obj = (Duracion)super.clone();
+		} catch (Exception e) {
+			System.out.println(" no se puede duplicar objeto");
+		}
+		return obj;
+	}
+	
+	
 }

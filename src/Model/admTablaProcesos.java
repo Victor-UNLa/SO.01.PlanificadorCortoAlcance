@@ -4,23 +4,13 @@ import java.util.List;
 
 public class admTablaProcesos {
 
-	/*------------------------------------------------------*/
-	// Atributos
-	/*------------------------------------------------------*/
 	private List<Proceso> lstProcesos;
 	private int cantidaColumnas;
 
-	/*------------------------------------------------------*/
-	// Constructor
-	/*------------------------------------------------------*/
 	public admTablaProcesos(admProcesamiento admP) {
 		this.lstProcesos = admP.getLstProcesos();
 		this.cantidaColumnas = admP.getCantidaColumnas();
 	}
-
-	/*------------------------------------------------------*/
-	// Métodos Getter y Setter
-	/*------------------------------------------------------*/
 
 	public int getCantidaColumnas() {
 		return cantidaColumnas;
@@ -38,9 +28,6 @@ public class admTablaProcesos {
 		this.lstProcesos = lstProcesos;
 	}
 
-	/*------------------------------------------------------*/
-	// Metodos
-	/*------------------------------------------------------*/
 	public Proceso traerProceso(int idProceso) {
 		return lstProcesos.get(idProceso - 1);
 	}
@@ -50,7 +37,6 @@ public class admTablaProcesos {
 	}
 
 	// Módulos de Formulas ->
-	/*------------------------------------------------------*/
 	public int tiempoLLegada(int idProceso) {
 		return traerProceso(idProceso).getComienzaTiempo();
 	}
@@ -85,8 +71,6 @@ public class admTablaProcesos {
 		return cantidad/getLstProcesos().size();
 	}
 
-	// @Override ->
-	/*------------------------------------------------------*/
 	public String toString(Tabla[][] tabla) {
 		String string = "";
 		float T = 0;

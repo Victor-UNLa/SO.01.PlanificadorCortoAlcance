@@ -34,8 +34,6 @@ public class Buffers {
 		this.lstProcesos = lstProcesos;
 	}
 
-	/*------------------------------------------------------*/
-	// Metodos
 	public boolean bloquearProceso(Proceso proceso) {
 		boolean validate = false;
 		validate = getLstProcesos().add(proceso);
@@ -97,7 +95,7 @@ public class Buffers {
 		Proceso procesoAux = new Proceso();int k;
 		boolean ordenado=false;
 
-		// Ordeno lista por InsertionSort
+		// Ordeno lista por InsertionSort por id
 		for(int i=1;i<lenD;i++){
 			procesoAux=getLstProcesos().get(i);
 			k=i-1;
@@ -123,7 +121,6 @@ public class Buffers {
 		}
 		return endEyS;
 	}
-	
 	
 	@Override
 	public String toString() {
